@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ds">
+        <attr name="colorPrimary" format="color"/>
+        <attr name="colorPrimaryDark" format="color"/>
+        <attr name="colorAccent" format="color"/>
+        <attr name="backgroundcolore" format="color"/>
+        <attr name="cardbackground" format="color"/>
+        <attr name="naviconcolor" format="color"/>
+        <attr name="naviconcolornot" format="color"/>
+        <attr name="textcolore" format="color"/>
+        <attr name="tintcolore" format="color"/>
+        <attr name="progresspar" format="color"/>
+        <attr name="buttoncolore" format="color"/>
+        <attr name="mainebg" format="reference"/>
+        <attr name="pauseicon" format="reference"/>
+    </declare-styleable>
+</resources>

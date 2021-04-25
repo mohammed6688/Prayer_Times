@@ -1,0 +1,40 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundcolore">@color/snow</item>
+        <item name="cardbackground">@color/whitecardbackground</item>
+        <item name="textcolore">@color/textcolore</item>
+        <item name="tintcolore">@color/tintcolore</item>
+        <item name="buttoncolore">@color/colorAccent</item>
+        <item name="progresspar">@color/colorPrimary</item>
+        <item name="naviconcolor">@color/colorPrimary</item>
+        <item name="naviconcolornot">#61000000</item>
+        <item name="mainebg">@mipmap/bg4</item>
+    </style>
+
+    <style name="NightTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundcolore">#303030</item>
+        <item name="cardbackground">#424242</item>
+        <item name="textcolore">#ffff</item>
+        <item name="tintcolore">@color/colorAccent</item>
+        <item name="buttoncolore">@color/colorAccent</item>
+        <item name="progresspar">@color/colorAccent</item>
+        <item name="naviconcolor">#ffff</item>
+        <item name="naviconcolornot">#80FFFFFF</item>
+        <item name="mainebg">@mipmap/bg4_black</item>
+    </style>
+
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">?attr/textcolore</item>
+    </style>
+
+</resources>
