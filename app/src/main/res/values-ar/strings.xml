@@ -4,7 +4,7 @@
     <string name="language">اللغة</string>
     <string name="night_mode">الوضع الليلي</string>
     <string name="choose_lang">تغيير اللغة</string>
-    <string name="time_format">تنسيق الوقت</string>
+    <string name="time_format">تنسيق الوقت 12 ساعة</string>
     <string name="fajr_prayer">صلاة الفجر:</string>
     <string name="shurroq_prayer">صلاة الشروق:</string>
     <string name="zuhr_prayer">صلاة الظهر:</string>
