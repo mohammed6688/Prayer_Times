@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">Prayer Times</string>
+    <string name="app_name" translatable="false">Prayer Times</string>
+    <string name="language">Language</string>
+    <string name="method">Method</string>
+    <string name="night_mode">Night mode</string>
+    <string name="choose_lang">Choose Language</string>
+    <string name="time_format">Time Format</string>
+    <string name="fajr_prayer">"Fajr prayer: "</string>
+    <string name="shurroq_prayer">"Shurooq prayer: "</string>
+    <string name="zuhr_prayer">"Zuhr prayer: "</string>
+    <string name="asr_prayer">"Asr prayer: "</string>
+    <string name="magrib_prayer">"Maghrib prayer: "</string>
+    <string name="isa_prayer">"Isa prayer: "</string>
+    <string name="is_remaining">" is remaining"</string>
+    <string name="fajr">Fajr</string>
+    <string name="shorooq">Shorooq</string>
+    <string name="zuhr">Zuhr</string>
+    <string name="asr">Asr</string>
+    <string name="majreb">Majreb</string>
+    <string name="isha">isha</string>
+    <string name="setting">Settings</string>
 </resources>

@@ -221,7 +221,7 @@
                                 android:textColor="?attr/textcolore"
                                 android:ellipsize="marquee"
                                 android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="Fajr"/>
+                                android:text="@string/fajr"/>
                             <TextView
                                 android:id="@+id/fajr"
                                 android:layout_width="wrap_content"
@@ -263,7 +263,7 @@
                                 android:textColor="?attr/textcolore"
                                 android:ellipsize="marquee"
                                 android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="Shorooq"/>
+                                android:text="@string/shorooq"/>
                             <TextView
                                 android:id="@+id/shorooq"
                                 android:layout_width="wrap_content"
@@ -304,7 +304,7 @@
                                 android:textColor="?attr/textcolore"
                                 android:ellipsize="marquee"
                                 android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="Zuhr"/>
+                                android:text="@string/zuhr"/>
                             <TextView
                                 android:id="@+id/zuhr"
                                 android:layout_width="wrap_content"
@@ -345,7 +345,7 @@
                                 android:singleLine="true"
                                 android:ellipsize="marquee"
                                 android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="Asr"/>
+                                android:text="@string/asr"/>
                             <TextView
                                 android:id="@+id/asr"
                                 android:layout_width="wrap_content"
@@ -386,7 +386,7 @@
                                 android:singleLine="true"
                                 android:ellipsize="marquee"
                                 android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="Majreb"/>
+                                android:text="@string/majreb"/>
                             <TextView
                                 android:id="@+id/majreb"
                                 android:layout_width="wrap_content"
@@ -427,7 +427,7 @@
                                 android:singleLine="true"
                                 android:ellipsize="marquee"
                                 android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="isha"/>
+                                android:text="@string/isha"/>
                             <TextView
                                 android:id="@+id/isha"
                                 android:layout_width="wrap_content"

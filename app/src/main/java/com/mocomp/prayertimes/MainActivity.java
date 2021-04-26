@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.text.format.Time;
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
     String monthString;
     String monthNumber;
     String year;
+    String gregoryDate;
+    String City;
+    String hijriMonthTxt;
 
 
     String url = "https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method=8";
@@ -73,6 +77,27 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(AppController.getPrefranceData("lang").equals("ar")){
+            Locale locale2 = new Locale("ar");
+            Locale.setDefault(locale2);
+
+            Configuration config2 = new Configuration();
+            config2.locale = locale2;
+
+            getBaseContext().getResources().updateConfiguration(
+                    config2,getBaseContext().getResources().getDisplayMetrics());
+        }else if (AppController.getPrefranceData("lang").equals("en")){
+            Locale locale2 = new Locale("en");
+            Locale.setDefault(locale2);
+
+            Configuration config2 = new Configuration();
+            config2.locale = locale2;
+
+            getBaseContext().getResources().updateConfiguration(
+                    config2,getBaseContext().getResources().getDisplayMetrics());
+        }
+
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -117,12 +142,20 @@ public class MainActivity extends AppCompatActivity {
         card1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (fajr != null){
                     try {
-                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+                        String value;
+                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
                         final Date dateObj = sdf.parse(fajr);
-                        String newFajr=new SimpleDateFormat("hh:mm a").format(dateObj);
-                        String value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                        String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                        if (time2.equals(fajr)){
+                            value =nextDay(gregoryDate)+" "+newFajr;
+                            //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
+                        }else {
+                            value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                        }
+
                         Log.e("value",value);
                         remaintimevalue=timediff(currentdatetime(),value);
                     } catch (ParseException e) {
@@ -137,10 +170,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (shurooq != null){
                     try {
-                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+                        String value;
+                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
                         final Date dateObj = sdf.parse(shurooq);
-                        String newFajr=new SimpleDateFormat("hh:mm a").format(dateObj);
-                        String value =monthNumber+"/"+Day+"/"+year+" "+newFajr;
+                        String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                        if (time2.equals(fajr)){
+                            value =nextDay(gregoryDate)+" "+newFajr;
+                            //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
+                        }else {
+                            value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                        }
                         String remaintime=timediff(currentdatetime(),value);
                         Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                     } catch (ParseException e) {
@@ -155,10 +194,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (zuhr != null){
                     try {
-                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+                        String value;
+                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
                         final Date dateObj = sdf.parse(zuhr);
-                        String newFajr=new SimpleDateFormat("hh:mm a").format(dateObj);
-                        String value =monthNumber+"/"+Day+"/"+year+" "+newFajr;
+                        String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                        if (time2.equals(fajr)){
+                            value =nextDay(gregoryDate)+" "+newFajr;
+                            //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
+                        }else {
+                            value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                        }
                         String remaintime=timediff(currentdatetime(),value);
                         Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                     } catch (ParseException e) {
@@ -172,10 +217,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (asr != null){
                     try {
-                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+                        String value;
+                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
                         final Date dateObj = sdf.parse(asr);
-                        String newFajr=new SimpleDateFormat("hh:mm a").format(dateObj);
-                        String value =monthNumber+"/"+Day+"/"+year+" "+newFajr;
+                        String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                        if (time2.equals(fajr)){
+                            value =nextDay(gregoryDate)+" "+newFajr;
+                            //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
+                        }else {
+                            value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                        }
                         String remaintime=timediff(currentdatetime(),value);
                         Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                     } catch (ParseException e) {
@@ -189,10 +240,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (magrib != null){
                     try {
-                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+                        String value;
+                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
                         final Date dateObj = sdf.parse(magrib);
-                        String newFajr=new SimpleDateFormat("hh:mm a").format(dateObj);
-                        String value =monthNumber+"/"+Day+"/"+year+" "+newFajr;
+                        String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                        if (time2.equals(fajr)){
+                            value =nextDay(gregoryDate)+" "+newFajr;
+                            //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
+                        }else {
+                            value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                        }
                         String remaintime=timediff(currentdatetime(),value);
                         Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                     } catch (ParseException e) {
@@ -206,10 +263,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (isa != null){
                     try {
-                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+                        String value;
+                        final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
                         final Date dateObj = sdf.parse(isa);
-                        String newFajr=new SimpleDateFormat("hh:mm a").format(dateObj);
-                        String value =monthNumber+"/"+Day+"/"+year+" "+newFajr;
+                        String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                        if (time2.equals(fajr)){
+                            value =nextDay(gregoryDate)+" "+newFajr;
+                            //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
+                        }else {
+                            value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                        }
                         String remaintime=timediff(currentdatetime(),value);
                         Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                     } catch (ParseException e) {
@@ -225,6 +288,17 @@ public class MainActivity extends AppCompatActivity {
         if (!method.isEmpty()){
             url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method="+method;
         }
+    }
+
+    private String nextDay(String dt) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        Calendar c = Calendar.getInstance();
+        c.setTime(sdf.parse(dt));
+        c.add(Calendar.DATE, 1);  // number of days to add
+        dt = sdf.format(c.getTime());  // dt is now the new date
+        SimpleDateFormat newSdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        String newDt = newSdf.format(c.getTime());
+        return newDt;
     }
 
     private void getData() {
@@ -243,19 +317,22 @@ public class MainActivity extends AppCompatActivity {
                             isa = response.getJSONObject("data").getJSONObject("timings").get("Isha").toString();
                             shurooq = response.getJSONObject("data").getJSONObject("timings").get("Sunrise").toString();
                             String hijriDate = response.getJSONObject("data").getJSONObject("date").getJSONObject("hijri").get("date").toString();
-                            String hijriMonthTxt = response.getJSONObject("data").getJSONObject("date").getJSONObject("hijri").getJSONObject("month").get("en").toString();
-                            String City = response.getJSONObject("data").getJSONObject("meta").get("timezone").toString();
-                            String gregoryDate =  response.getJSONObject("data").getJSONObject("date").get("readable").toString();
+                            if(AppController.getPrefranceData("lang").equals("ar")){
+                                hijriMonthTxt = response.getJSONObject("data").getJSONObject("date").getJSONObject("hijri").getJSONObject("month").get("ar").toString();
 
-                            Fajr.setText(fajr);
-                            Zuhr.setText(zuhr);
-                            Asr.setText(asr);
-                            Majreb.setText(magrib);
-                            isha.setText(isa);
+                            }else {
+                                hijriMonthTxt = response.getJSONObject("data").getJSONObject("date").getJSONObject("hijri").getJSONObject("month").get("en").toString();
+
+                            }
+                            City = response.getJSONObject("data").getJSONObject("meta").get("timezone").toString();
+                            gregoryDate =  response.getJSONObject("data").getJSONObject("date").getJSONObject("gregorian").get("date").toString();
+
                             city.setText(City);
-                            shorooq.setText(shurooq);
 
-                            @SuppressLint("SimpleDateFormat") SimpleDateFormat format1=new SimpleDateFormat("dd MMM yyy");
+                            setPrayerTimes();
+
+
+                            @SuppressLint("SimpleDateFormat") SimpleDateFormat format1=new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
                             Date dt1=format1.parse(gregoryDate);
                             dayOfTheWeek = (String) DateFormat.format("EEEE", dt1); // Thursday
                             Day          = (String) DateFormat.format("dd",   dt1); // 20
@@ -267,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
                             day.setText(dayOfTheWeek);
 
 
-                            @SuppressLint("SimpleDateFormat") SimpleDateFormat format2=new SimpleDateFormat("dd-MM-yyyy");
+                            @SuppressLint("SimpleDateFormat") SimpleDateFormat format2=new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
                             Date dt2=format2.parse(hijriDate);
                             String dayOfTheWeekHijri = (String) DateFormat.format("EEEE", dt2); // Thursday
                             String DayHijri          = (String) DateFormat.format("dd",   dt2); // 20
@@ -310,22 +387,22 @@ public class MainActivity extends AppCompatActivity {
                                 Log.e("time", getCurrentTime());
                             }
                             if (NextSalat == 1){
-                                nextSalat.setText("Fajr prayer: "+fajr);
+                                nextSalat.setText(getResources().getString(R.string.fajr_prayer)+fajr);
                                 time2 = fajr;
                             }else if (NextSalat == 2){
-                                nextSalat.setText("Shurooq prayer: "+shurooq);
+                                nextSalat.setText(getResources().getString(R.string.shurroq_prayer)+shurooq);
                                 time2 = shurooq;
                             }else if (NextSalat == 3){
-                                nextSalat.setText("Zuhr prayer: "+zuhr);
+                                nextSalat.setText(getResources().getString(R.string.zuhr_prayer)+zuhr);
                                 time2 = zuhr;
                             }else if (NextSalat == 4){
-                                nextSalat.setText("Asr prayer: "+asr);
+                                nextSalat.setText(getResources().getString(R.string.asr_prayer)+asr);
                                 time2 = asr;
                             }else if (NextSalat == 5){
-                                nextSalat.setText("Maghrib prayer: "+magrib);
+                                nextSalat.setText(getResources().getString(R.string.magrib_prayer)+magrib);
                                 time2 = magrib;
                             }else if (NextSalat == 6){
-                                nextSalat.setText("Isa prayer: "+isa);
+                                nextSalat.setText(getResources().getString(R.string.isa_prayer)+isa);
                                 time2 = isa;
                             }
 
@@ -333,11 +410,11 @@ public class MainActivity extends AppCompatActivity {
                                 Log.e("currentdatetime",currentdatetime());
                                 Log.e("timeeee",timediff(currentdatetime(),"04/26/2021 11:00 pm"));
 
-                                final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
+                                final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
                                 final Date dateObj = sdf.parse(fajr);
-                                String newFajr=new SimpleDateFormat("hh:mm a").format(dateObj);
+                                String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
 
-                                String value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                                String value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
 
                                 Log.e("value",value);
                                 remaintimevalue=timediff(currentdatetime(),value);
@@ -348,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
                                 remaintimevalue=timediff(currentdatetime(),value);
                             }
 
-                            remainTime.setText(remaintimevalue+" is remaining");
+                            remainTime.setText(remaintimevalue+getResources().getString(R.string.is_remaining));
                             Log.e("remaining",remaintimevalue);
 
                         } catch (JSONException | ParseException e) {
@@ -375,10 +452,42 @@ public class MainActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
-    public static String getCurrentTime() {
-        final String DATE_FORMAT_1 = "h:mm a";
+    private void setPrayerTimes() {
+        if (AppController.getPrefranceDataBoolean("12")){
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_1);
+            try {
+                final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
+                final Date dateObj = sdf.parse(fajr);
+                Fajr.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj));
+                final Date dateObjzuhr = sdf.parse(zuhr);
+                Zuhr.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjzuhr));
+                final Date dateObjasr = sdf.parse(asr);
+                Asr.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjasr));
+                final Date dateObjmagrib = sdf.parse(magrib);
+                Majreb.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjmagrib));
+                final Date dateObjisa = sdf.parse(isa);
+                isha.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjisa));
+                final Date dateObjshurooq = sdf.parse(shurooq);
+                shorooq.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjshurooq));
+            } catch (final ParseException e) {
+                e.printStackTrace();
+            }
+
+        }else {
+            Fajr.setText(fajr);
+            Zuhr.setText(zuhr);
+            Asr.setText(asr);
+            Majreb.setText(magrib);
+            isha.setText(isa);
+
+            shorooq.setText(shurooq);
+        }
+    }
+
+    public static String getCurrentTime() {
+        final String DATE_FORMAT_1 = "H:mm";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_1, Locale.ENGLISH);
         //dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date today = Calendar.getInstance().getTime();
         return dateFormat.format(today);
@@ -387,7 +496,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private String currentdatetime(){
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.ENGLISH);
         String currentDateandTime = sdf.format(new Date());
         return  currentDateandTime;
     }
@@ -395,8 +504,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean checktimings(String time, String endtime) {
 
-        String pattern = "h:mm a";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        String pattern = "H:mm";
+
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.ENGLISH);
 
         try {
             Date date1 = sdf.parse(time);
@@ -414,32 +524,25 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public String addminuts(String myTime , int time) throws ParseException {
-
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("h:mm a");
-        Date d = df.parse(myTime);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
-        cal.add(Calendar.MINUTE, time);
-        String newTime = df.format(cal.getTime());
-        Log.e("the time",newTime);
-        return newTime;
-    }
 
     public  String timediff(String dateStart , String dateStop) throws ParseException {
 
         //HH converts hour in 24 hours format (0-23), day calculation
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.ENGLISH);
 
         Date d1 = null;
         Date d2 = null;
 
+
+        Log.e("time",dateStart);
+        Log.e("timesec",dateStop);
         d1 = format.parse(dateStart);
         d2 = format.parse(dateStop);
 
         //in milliseconds
         long diff = d2.getTime() - d1.getTime();
 
+        Log.e("diff", String.valueOf(diff));
         long diffSeconds = diff / 1000 % 60;
         long diffMinutes = diff / (60 * 1000) % 60;
         long diffHours = diff / (60 * 60 * 1000) % 24;
@@ -477,5 +580,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(setting);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
     }
 }
