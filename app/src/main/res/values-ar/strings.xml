@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Prayer Times</string>
+    <string name="language">اللغة</string>
+    <string name="night_mode">الوضع الليلي</string>
+    <string name="choose_lang">تغيير اللغة</string>
+    <string name="time_format">تنسيق الوقت</string>
+    <string name="fajr_prayer">صلاة الفجر:</string>
+    <string name="shurroq_prayer">صلاة الشروق:</string>
+    <string name="zuhr_prayer">صلاة الظهر:</string>
+    <string name="asr_prayer">صلاة العصر:</string>
+    <string name="magrib_prayer">صلاة المغرب:</string>
+    <string name="isa_prayer">صلاة عيسى:</string>
+    <string name="is_remaining">باقٍ </string>
+    <string name="method">طريقة حساب اوقات الصلاة</string>
+    <string name="fajr">الفجر</string>
+    <string name="shorooq">الشروق</string>
+    <string name="zuhr">الظهر</string>
+    <string name="asr">العصر</string>
+    <string name="majreb">المغرب</string>
+    <string name="isha">العشاء</string>
+    <string name="setting">الأعدادات</string>
+</resources>
