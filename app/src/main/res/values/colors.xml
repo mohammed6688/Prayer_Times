@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2270D5</color>
-    <color name="colorPrimaryDark">#C82270D5</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#448994</color>
+    <color name="colorPrimaryDark">#448994</color>
+    <color name="colorAccent">#448994</color>
 
+    <color name="black">#000000</color>
     <color name="smallmediaplayerBG">#B4B3B3</color>
     <color name="snow">#ffffff</color>
     <color name="background">#DFDFDF</color>
@@ -14,5 +15,5 @@
     <color name="buttoncolore">#ffffff</color>
     <color name="sendcolor">#00FF04</color>
     <color name="disconnected">#000000</color>
-    <color name="whitecardbackground">#1D000000</color>
+    <color name="whitecardbackground">#FFFFFF</color>
 </resources>

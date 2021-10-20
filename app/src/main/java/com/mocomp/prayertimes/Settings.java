@@ -72,7 +72,9 @@ public class Settings extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.setting));
-
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
 
         languageLay = findViewById(R.id.languageLay);
         myswitch = findViewById(R.id.switche);
@@ -137,9 +139,9 @@ public class Settings extends AppCompatActivity {
                 "Diyanet İşleri Başkanlığı, Turkey","Spiritual Administration of Muslims of Russia"};
 
         if(AppController.getPrefranceData("lang").equals("ar")){
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsAr);
+            adapter = new ArrayAdapter<>(this, R.layout.spinner_item, itemsAr);
         }else {
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+            adapter = new ArrayAdapter<>(this, R.layout.spinner_item, items);
         }
 
         methodSpinner.setAdapter(adapter);

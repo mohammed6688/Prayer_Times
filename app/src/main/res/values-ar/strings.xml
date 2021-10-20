@@ -20,4 +20,5 @@
     <string name="majreb">المغرب</string>
     <string name="isha">العشاء</string>
     <string name="setting">الأعدادات</string>
+    <string name="set_alarm">Set alarm</string>
 </resources>

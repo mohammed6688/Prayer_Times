@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">Prayer Times</string>
-    <string name="language">Language</string>
-    <string name="method">Method</string>
+    <string name="language">Change language</string>
+    <string name="method">Calculation method</string>
     <string name="night_mode">Night mode</string>
     <string name="choose_lang">Choose Language</string>
-    <string name="time_format">Time Format 12 hour</string>
+    <string name="time_format">12hr Time format</string>
     <string name="fajr_prayer">"Fajr prayer: "</string>
     <string name="shurroq_prayer">"Shurooq prayer: "</string>
     <string name="zuhr_prayer">"Zuhr prayer: "</string>
@@ -19,4 +19,5 @@
     <string name="majreb">Majreb</string>
     <string name="isha">isha</string>
     <string name="setting">Settings</string>
+    <string name="set_alarm">Set alarm</string>
 </resources>

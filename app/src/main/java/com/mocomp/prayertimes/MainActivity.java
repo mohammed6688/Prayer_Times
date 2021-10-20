@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
     String gregoryDate;
     String City;
     String hijriMonthTxt;
-
-
     String url = "https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method=8";
 
     //String url = "https://muslimsalat.com/cairo/Qalyubia/toukh/daily/1.json?key=a8e72d680845a42fbb23891020d968ca";
@@ -135,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         card6 = findViewById(R.id.card6);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
         pDialog.show();
     }
 

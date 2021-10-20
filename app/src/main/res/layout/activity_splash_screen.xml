@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreen">
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/bg2"
-        android:scaleType="centerCrop"/>
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/logo"
+        app:riv_corner_radius="15dp" />
 
 </RelativeLayout>
