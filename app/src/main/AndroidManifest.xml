@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mocomp.prayertimes">
+    package="com.mocomp.prayeralert">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".AppController"
+        android:name="com.mocomp.prayeralert.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,14 +13,14 @@
         android:supportsRtl="false"
         android:exported="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Theme"></activity>
-        <activity android:name=".Settings"
+        <activity android:name="com.mocomp.prayeralert.Theme"></activity>
+        <activity android:name="com.mocomp.prayeralert.Settings"
             android:exported="true"/>
-        <activity android:name=".MainActivity"
+        <activity android:name="com.mocomp.prayeralert.MainActivity"
             android:exported="true">
 
         </activity>
-        <activity android:name=".SplashScreen"
+        <activity android:name="com.mocomp.prayeralert.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

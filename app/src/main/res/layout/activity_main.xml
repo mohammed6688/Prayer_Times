@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,92 +11,90 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="-550dp"
-        android:alpha=".35"
+        android:alpha=".02"
         android:scaleType="centerCrop"
         android:src="@mipmap/bg" />
 
     <LinearLayout
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways"
-                android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+                android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_scrollFlags="scroll|enterAlways">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="pray"
+                    android:text="@string/home"
                     android:textColor="#ffff"
-                    android:textSize="17dp"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="er"
-                    android:textColor="#ffff"
-                    android:textSize="17dp"/>
+                    android:textSize="17sp" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            app:cardCornerRadius="25dp">
+            android:layout_weight="1">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="?attr/mainebg"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:src="?attr/mainebg" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_margin="18dp">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:layout_margin="18dp"
+                            android:layout_alignParentEnd="true"
                             android:orientation="horizontal">
+
                             <TextView
-                                android:visibility="visible"
                                 android:id="@+id/hijriDay"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="20sp"
-                                android:textColor="?attr/textcolore"
                                 android:fontFamily="@font/advent_pro_bold"
-                                android:text="6 "/>
+                                android:text="6 "
+                                android:textColor="?attr/textcolore"
+                                android:textSize="20sp"
+                                android:visibility="visible" />
+
                             <TextView
-                                android:visibility="visible"
                                 android:id="@+id/hijriMonth"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="Ramadan"
                                 android:textColor="?attr/textcolore"
                                 android:textSize="18sp"
-                                android:text="Ramadan"/>
+                                android:visibility="visible" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -106,36 +103,38 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
-                            android:layout_margin="18dp"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/dateDay"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/advent_pro_bold"
-                                android:textSize="25sp"
+                                android:text="4 "
                                 android:textColor="?attr/textcolore"
-                                android:text="4 "/>
+                                android:textSize="25sp" />
+
                             <TextView
                                 android:id="@+id/dateMonth"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
+                                android:text="April"
                                 android:textColor="?attr/textcolore"
-                                android:text="April"/>
+                                android:textSize="18sp" />
                         </LinearLayout>
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:id="@+id/secondlay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
+                            android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/nextSalat"
@@ -143,8 +142,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/advent_pro_bold"
-                                android:textColor="?attr/textcolore"
                                 android:text="Asr prayer: 3:30"
+                                android:textColor="?attr/textcolore"
                                 android:textSize="30sp" />
 
                             <TextView
@@ -152,13 +151,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:fontFamily="@font/antic"
                                 android:ellipsize="marquee"
-                                android:textStyle="bold"
-                                android:textColor="?attr/textcolore"
-                                android:marqueeRepeatLimit ="marquee_forever"
+                                android:fontFamily="@font/antic"
+                                android:marqueeRepeatLimit="marquee_forever"
                                 android:text="2 hours and 1 minute remaining"
-                                android:textSize="18sp" />
+                                android:textColor="?attr/textcolore"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
                     </RelativeLayout>
@@ -189,9 +188,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
                             android:layout_margin="18dp"
-                            android:textSize="18sp"
+                            android:text="Musl"
                             android:textColor="?attr/textcolore"
-                            android:text="Musl"/>
+                            android:textSize="18sp" />
                     </RelativeLayout>
 
 
@@ -199,300 +198,321 @@
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
 
-
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight=".50">
+            android:layout_weight=".50"
+            android:orientation="vertical">
 
-            <ScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:stateListAnimator="@anim/lift_on_touch"
+                    app:cardBackgroundColor="?attr/cardbackground"
+                    app:cardCornerRadius="5dp"
+                    android:alpha=".80"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card1"
-                        android:layout_weight="1"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:stateListAnimator="@anim/lift_on_touch"
-                        android:clickable="true"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        app:cardBackgroundColor="?attr/cardbackground"
-                        android:focusable="true">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="18dp">
+                        android:layout_gravity="center"
+                        android:layout_margin="18dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit="marquee_forever"
-                                android:singleLine="true"
-                                android:text="@string/fajr"
-                                android:textColor="?attr/textcolore"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:id="@+id/fajr"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:singleLine="true"
-                                android:textColor="?attr/textcolore"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text=""/>
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card2"
-                        android:layout_weight="1"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text="@string/fajr"
+                            android:textColor="?attr/textcolore"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/fajr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="?attr/textcolore"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:stateListAnimator="@anim/lift_on_touch"
+                    app:cardBackgroundColor="?attr/cardbackground"
+                    app:cardCornerRadius="5dp"
+                    android:alpha=".80"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:stateListAnimator="@anim/lift_on_touch"
-                        android:clickable="true"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        app:cardBackgroundColor="?attr/cardbackground"
-                        android:focusable="true">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="18dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:singleLine="true"
-                                android:textColor="?attr/textcolore"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="@string/shorooq"/>
-                            <TextView
-                                android:id="@+id/shorooq"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:singleLine="true"
-                                android:textColor="?attr/textcolore"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text=""/>
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card3"
-                        android:layout_weight="1"
+                            android:layout_alignParentStart="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text="@string/shorooq"
+                            android:textColor="?attr/textcolore"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/shorooq"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="?attr/textcolore"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:stateListAnimator="@anim/lift_on_touch"
+                    app:cardBackgroundColor="?attr/cardbackground"
+                    app:cardCornerRadius="5dp"
+                    android:alpha=".80"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:stateListAnimator="@anim/lift_on_touch"
-                        android:clickable="true"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="true"
-                        app:cardBackgroundColor="?attr/cardbackground">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="18dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:singleLine="true"
-                                android:textColor="?attr/textcolore"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="@string/zuhr"/>
-                            <TextView
-                                android:id="@+id/zuhr"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:textColor="?attr/textcolore"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text=""/>
-                        </RelativeLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card4"
-                        android:layout_weight="1"
+                            android:layout_alignParentStart="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text="@string/zuhr"
+                            android:textColor="?attr/textcolore"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/zuhr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="?attr/textcolore"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:stateListAnimator="@anim/lift_on_touch"
+                    app:cardBackgroundColor="?attr/cardbackground"
+                    app:cardCornerRadius="5dp"
+                    android:alpha=".80"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:stateListAnimator="@anim/lift_on_touch"
-                        android:clickable="true"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="true"
-                        app:cardBackgroundColor="?attr/cardbackground">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="18dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:textColor="?attr/textcolore"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="@string/asr"/>
-                            <TextView
-                                android:id="@+id/asr"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:textColor="?attr/textcolore"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text=""/>
-                        </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card5"
-                        android:layout_weight="1"
+                            android:layout_alignParentStart="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text="@string/asr"
+                            android:textColor="?attr/textcolore"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/asr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="?attr/textcolore"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:stateListAnimator="@anim/lift_on_touch"
+                    app:cardBackgroundColor="?attr/cardbackground"
+                    app:cardCornerRadius="5dp"
+                    android:alpha=".80"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:stateListAnimator="@anim/lift_on_touch"
-                        android:clickable="true"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="true"
-                        app:cardBackgroundColor="?attr/cardbackground">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="18dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:textColor="?attr/textcolore"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="@string/majreb"/>
-                            <TextView
-                                android:id="@+id/majreb"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:singleLine="true"
-                                android:textColor="?attr/textcolore"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text=""/>
-                        </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card6"
-                        android:layout_weight="1"
+                            android:layout_alignParentStart="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text="@string/majreb"
+                            android:textColor="?attr/textcolore"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/majreb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="?attr/textcolore"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:stateListAnimator="@anim/lift_on_touch"
+                    app:cardBackgroundColor="?attr/cardbackground"
+                    app:cardCornerRadius="5dp"
+                    android:alpha=".80"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:stateListAnimator="@anim/lift_on_touch"
-                        android:clickable="true"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="true"
-                        app:cardBackgroundColor="?attr/cardbackground">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="18dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:textColor="?attr/textcolore"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text="@string/isha"/>
-                            <TextView
-                                android:id="@+id/isha"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:singleLine="true"
-                                android:textColor="?attr/textcolore"
-                                android:ellipsize="marquee"
-                                android:marqueeRepeatLimit ="marquee_forever"
-                                android:text=""/>
-                        </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-            </ScrollView>
+                            android:layout_alignParentStart="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text="@string/isha"
+                            android:textColor="?attr/textcolore"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/isha"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="?attr/textcolore"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
