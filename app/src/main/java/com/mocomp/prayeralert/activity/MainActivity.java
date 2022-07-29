@@ -24,6 +24,7 @@ import com.mocomp.prayeralert.AppController;
 import com.mocomp.prayeralert.R;
 import com.mocomp.prayeralert.Settings;
 import com.mocomp.prayeralert.dal.ServerDAO;
+import com.mocomp.prayeralert.model.Data;
 import com.mocomp.prayeralert.model.Timing;
 
 import org.json.JSONException;
@@ -37,29 +38,19 @@ import java.util.Locale;
 import static com.mocomp.prayeralert.Theme.PREFS_NAME;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String TAG ="tag" ;
-    String tag_json_obj = "json_obj_req";
     int NextSalat;
     String time2;
-    long difference;
     String Output;
     String remaintimevalue;
-    String fajr,zuhr,asr,magrib,isa,shurooq,midnight;
-    CardView card1,card2,card3,card4,card5,card6;
+    CardView card1, card2, card3, card4, card5, card6;
     String dayOfTheWeek;
     String Day;
     String monthString;
     String monthNumber;
     String year;
     String gregoryDate;
-    String City;
-    String hijriMonthTxt;
-    String url = "https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method=8";
-    Timing prayerTimes;
-    ProgressDialog pDialog;
-    TextView hijriDay,hijriMonth ,Fajr,Zuhr,Asr,Majreb,isha,nextSalat,remainTime,day,dateDay,dateMonth,city,shorooq;
-    ServerDAO serverDao;
+    TextView hijriDay, hijriMonth, Fajr, Zuhr, Asr, Majreb, isha, nextSalat, remainTime, day, gregoriDay, gregoriMonth, city, shorooq;
+    Data data = ServerDAO.serverDAO.data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(AppController.getPrefranceData("lang").equals("ar")){
+        if (AppController.getPrefranceData("lang").equals("ar")) {
             Locale locale2 = new Locale("ar");
             Locale.setDefault(locale2);
 
@@ -81,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
             config2.locale = locale2;
 
             getBaseContext().getResources().updateConfiguration(
-                    config2,getBaseContext().getResources().getDisplayMetrics());
-        }else if (AppController.getPrefranceData("lang").equals("en")){
+                    config2, getBaseContext().getResources().getDisplayMetrics());
+        } else if (AppController.getPrefranceData("lang").equals("en")) {
             Locale locale2 = new Locale("en");
             Locale.setDefault(locale2);
 
@@ -90,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             config2.locale = locale2;
 
             getBaseContext().getResources().updateConfiguration(
-                    config2,getBaseContext().getResources().getDisplayMetrics());
+                    config2, getBaseContext().getResources().getDisplayMetrics());
         }
 
 
@@ -101,9 +92,122 @@ public class MainActivity extends AppCompatActivity {
 
         initializeVariables();
         initializeListeners();
-        getMethod();
-        getData();
+        setPrayerTimes();
+        try {
+            setDate();
+            nextSala();
+        } catch (ParseException e) {
+            Log.e("error while parsing",e.toString());
+            e.printStackTrace();
+        }
+//        getData();
 
+    }
+
+    private void nextSala() throws ParseException {
+        if (checktimings(getCurrentTime(), data.getTiming().getFajr())) {
+            NextSalat = 1;
+            nextSalat.setText(getResources().getString(R.string.fajr_prayer) + data.getTiming().getFajr());
+            time2 = data.getTiming().getFajr();
+            card1.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            Log.e("time", getCurrentTime());
+        } else if (checktimings(getCurrentTime(), data.getTiming().getSunrise())) {
+
+            NextSalat = 2;
+            nextSalat.setText(getResources().getString(R.string.shurroq_prayer) + data.getTiming().getSunrise());
+            time2 = data.getTiming().getSunrise();
+            card2.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            Log.e("time", "2");
+
+        } else if (checktimings(getCurrentTime(), data.getTiming().getDhuhr())) {
+
+            NextSalat = 3;
+            nextSalat.setText(getResources().getString(R.string.zuhr_prayer) + data.getTiming().getDhuhr());
+            time2 = data.getTiming().getDhuhr();
+            card3.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            Log.e("time", "3");
+        } else if (checktimings(getCurrentTime(), data.getTiming().getAsr())) {
+
+            NextSalat = 4;
+            nextSalat.setText(getResources().getString(R.string.asr_prayer) + data.getTiming().getAsr());
+            time2 = data.getTiming().getAsr();
+            card4.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            Log.e("time", "4");
+
+        } else if (checktimings(getCurrentTime(), data.getTiming().getMaghrib())) {
+            NextSalat = 5;
+            nextSalat.setText(getResources().getString(R.string.magrib_prayer) + data.getTiming().getMaghrib());
+            time2 = data.getTiming().getMaghrib();
+            card5.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            Log.e("time", "5");
+
+        } else if (checktimings(getCurrentTime(), data.getTiming().getIsha())) {
+
+            NextSalat = 6;
+            nextSalat.setText(getResources().getString(R.string.isa_prayer) + data.getTiming().getIsha());
+            time2 = data.getTiming().getIsha();
+            card6.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            Log.e("time", "6");
+
+        } else {
+            NextSalat = 1;
+            Log.e("time", getCurrentTime());
+        }
+
+
+        if (time2.equals(data.getTiming().getFajr())) {
+            Log.e("currentdatetime", currentdatetime());
+            Log.e("timeeee", timediff(currentdatetime(), "04/26/2021 11:00 pm"));
+
+            final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
+            final Date dateObj = sdf.parse(data.getTiming().getFajr());
+            String newFajr = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+
+            String value = monthNumber + "/" + (Integer.parseInt(Day) + 1) + "/" + year + " " + newFajr;
+
+            Log.e("value", value);
+            remaintimevalue = timediff(currentdatetime(), value);
+            Log.e("remaining", remaintimevalue);
+
+        } else {
+            String value = monthNumber + "/" + Day + "/" + year + " " + time2;
+            remaintimevalue = timediff(currentdatetime(), value);
+        }
+
+        remainTime.setText(remaintimevalue + getResources().getString(R.string.is_remaining));
+    }
+
+    private void setDate() throws ParseException {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        Date dt1 = format1.parse(data.getDate().getGregorianDate().getDate());
+
+        dayOfTheWeek = (String) DateFormat.format("EEEE", dt1); // Thursday
+        Day = (String) DateFormat.format("dd", dt1); // 20
+        monthString = (String) DateFormat.format("MMM", dt1); // Jun
+        monthNumber = (String) DateFormat.format("MM", dt1); // 06
+        year = (String) DateFormat.format("yyyy", dt1); // 2013
+
+
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        Date dt2 = format2.parse(data.getDate().getHijriDate().getDate());
+        String dayOfTheWeekHijri = (String) DateFormat.format("EEEE", dt2); // Thursday
+        String DayHijri = (String) DateFormat.format("dd", dt2); // 20
+        String monthStringHijri = (String) DateFormat.format("MMM", dt2); // Jun
+        String monthNumberHijri = (String) DateFormat.format("MM", dt2); // 06
+        String yearHijri = (String) DateFormat.format("yyyy", dt2); // 2013
+
+        if (AppController.getPrefranceData("lang").equals("ar")) {
+            hijriMonth.setText(" " + data.getDate().getHijriDate().getMonth().getAr()+" ");
+        }else {
+            hijriMonth.setText(" " + data.getDate().getHijriDate().getMonth().getEn()+" ");
+        }
+
+        hijriDay.setText(DayHijri);
+        gregoriDay.setText(Day);
+        gregoriMonth.setText(" " + monthString+" ");
+        day.setText(dayOfTheWeek);
+        city.setText(data.getMeta().getTimeZone());
     }
 
     private void initializeVariables() {
@@ -111,8 +215,8 @@ public class MainActivity extends AppCompatActivity {
         nextSalat = findViewById(R.id.nextSalat);
         remainTime = findViewById(R.id.remainTime);
         day = findViewById(R.id.day);
-        dateDay = findViewById(R.id.dateDay);
-        dateMonth = findViewById(R.id.dateMonth);
+        gregoriDay = findViewById(R.id.dateDay);
+        gregoriMonth = findViewById(R.id.dateMonth);
         city = findViewById(R.id.city);
         hijriDay = findViewById(R.id.hijriDay);
         hijriMonth = findViewById(R.id.hijriMonth);
@@ -127,30 +231,27 @@ public class MainActivity extends AppCompatActivity {
         card4 = findViewById(R.id.card4);
         card5 = findViewById(R.id.card5);
         card6 = findViewById(R.id.card6);
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Loading...");
-        pDialog.setCancelable(false);
-        pDialog.show();
+
     }
 
     private void initializeListeners() {
         card1.setOnClickListener(v -> {
 
-            if (fajr != null){
+            if (data.getTiming().getFajr() != null) {
                 try {
                     String value;
                     final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
-                    final Date dateObj = sdf.parse(fajr);
-                    String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
-                    if (time2.equals(fajr)){
-                        value =nextDay(gregoryDate)+" "+newFajr;
+                    final Date dateObj = sdf.parse(data.getTiming().getFajr());
+                    String newFajr = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                    if (time2.equals(data.getTiming().getFajr())) {
+                        value = nextDay(gregoryDate) + " " + newFajr;
                         //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
-                    }else {
-                        value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                    } else {
+                        value = monthNumber + "/" + (Integer.parseInt(Day)) + "/" + year + " " + newFajr;
                     }
 
-                    Log.e("value",value);
-                    remaintimevalue=timediff(currentdatetime(),value);
+                    Log.e("value", value);
+                    remaintimevalue = timediff(currentdatetime(), value);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -158,19 +259,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         card2.setOnClickListener(v -> {
-            if (shurooq != null){
+            if (data.getTiming().getSunrise() != null) {
                 try {
                     String value;
                     final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
-                    final Date dateObj = sdf.parse(shurooq);
-                    String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
-                    if (time2.equals(fajr)){
-                        value =nextDay(gregoryDate)+" "+newFajr;
+                    final Date dateObj = sdf.parse(data.getTiming().getSunrise());
+                    String newFajr = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                    if (time2.equals(data.getTiming().getFajr())) {
+                        value = nextDay(gregoryDate) + " " + newFajr;
                         //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
-                    }else {
-                        value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                    } else {
+                        value = monthNumber + "/" + (Integer.parseInt(Day)) + "/" + year + " " + newFajr;
                     }
-                    String remaintime=timediff(currentdatetime(),value);
+                    String remaintime = timediff(currentdatetime(), value);
                     Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -179,19 +280,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         card3.setOnClickListener(v -> {
-            if (zuhr != null){
+            if (data.getTiming().getDhuhr() != null) {
                 try {
                     String value;
                     final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
-                    final Date dateObj = sdf.parse(zuhr);
-                    String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
-                    if (time2.equals(fajr)){
-                        value =nextDay(gregoryDate)+" "+newFajr;
+                    final Date dateObj = sdf.parse(data.getTiming().getDhuhr());
+                    String newFajr = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                    if (time2.equals(data.getTiming().getFajr())) {
+                        value = nextDay(gregoryDate) + " " + newFajr;
                         //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
-                    }else {
-                        value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                    } else {
+                        value = monthNumber + "/" + (Integer.parseInt(Day)) + "/" + year + " " + newFajr;
                     }
-                    String remaintime=timediff(currentdatetime(),value);
+                    String remaintime = timediff(currentdatetime(), value);
                     Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -199,19 +300,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         card4.setOnClickListener(v -> {
-            if (asr != null){
+            if (data.getTiming().getAsr() != null) {
                 try {
                     String value;
                     final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
-                    final Date dateObj = sdf.parse(asr);
-                    String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
-                    if (time2.equals(fajr)){
-                        value =nextDay(gregoryDate)+" "+newFajr;
+                    final Date dateObj = sdf.parse(data.getTiming().getAsr());
+                    String newFajr = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                    if (time2.equals(data.getTiming().getFajr())) {
+                        value = nextDay(gregoryDate) + " " + newFajr;
                         //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
-                    }else {
-                        value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                    } else {
+                        value = monthNumber + "/" + (Integer.parseInt(Day)) + "/" + year + " " + newFajr;
                     }
-                    String remaintime=timediff(currentdatetime(),value);
+                    String remaintime = timediff(currentdatetime(), value);
                     Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -219,19 +320,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         card5.setOnClickListener(v -> {
-            if (magrib != null){
+            if (data.getTiming().getMaghrib() != null) {
                 try {
                     String value;
                     final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
-                    final Date dateObj = sdf.parse(magrib);
-                    String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
-                    if (time2.equals(fajr)){
-                        value =nextDay(gregoryDate)+" "+newFajr;
+                    final Date dateObj = sdf.parse(data.getTiming().getMaghrib());
+                    String newFajr = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                    if (time2.equals(data.getTiming().getFajr())) {
+                        value = nextDay(gregoryDate) + " " + newFajr;
                         //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
-                    }else {
-                        value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                    } else {
+                        value = monthNumber + "/" + (Integer.parseInt(Day)) + "/" + year + " " + newFajr;
                     }
-                    String remaintime=timediff(currentdatetime(),value);
+                    String remaintime = timediff(currentdatetime(), value);
                     Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -239,19 +340,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         card6.setOnClickListener(v -> {
-            if (isa != null){
+            if (data.getTiming().getIsha() != null) {
                 try {
                     String value;
                     final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
-                    final Date dateObj = sdf.parse(isa);
-                    String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
-                    if (time2.equals(fajr)){
-                        value =nextDay(gregoryDate)+" "+newFajr;
+                    final Date dateObj = sdf.parse(data.getTiming().getIsha());
+                    String newFajr = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
+                    if (time2.equals(data.getTiming().getFajr())) {
+                        value = nextDay(gregoryDate) + " " + newFajr;
                         //value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
-                    }else {
-                        value =monthNumber+"/"+(Integer.parseInt(Day))+"/"+year+" "+newFajr;
+                    } else {
+                        value = monthNumber + "/" + (Integer.parseInt(Day)) + "/" + year + " " + newFajr;
                     }
-                    String remaintime=timediff(currentdatetime(),value);
+                    String remaintime = timediff(currentdatetime(), value);
                     Toast.makeText(MainActivity.this, remaintime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -260,12 +361,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getMethod() {
-        String method =AppController.getPrefranceData("method");
-        if (!method.isEmpty()){
-            url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method="+method;
-        }
-    }
+
 
     private String nextDay(String dt) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -278,187 +374,33 @@ public class MainActivity extends AppCompatActivity {
         return newDt;
     }
 
-    private void getData() {
-//        PrayerTimes pt =serverDao.getTimes(url);
-//        System.out.println(pt.getFajr());
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url, null,
-                response -> {
-                    Log.d(TAG, response.toString());
-                    try {
-                        fajr = response.getJSONObject("data").getJSONObject("timings").get("Fajr").toString();
-                        zuhr = response.getJSONObject("data").getJSONObject("timings").get("Dhuhr").toString();
-                        asr = response.getJSONObject("data").getJSONObject("timings").get("Asr").toString();
-                        magrib = response.getJSONObject("data").getJSONObject("timings").get("Maghrib").toString();
-                        isa = response.getJSONObject("data").getJSONObject("timings").get("Isha").toString();
-                        shurooq = response.getJSONObject("data").getJSONObject("timings").get("Sunrise").toString();
-                        midnight = response.getJSONObject("data").getJSONObject("timings").get("Midnight").toString();
-                        String hijriDate = response.getJSONObject("data").getJSONObject("date").getJSONObject("hijri").get("date").toString();
-                        if(AppController.getPrefranceData("lang").equals("ar")){
-                            hijriMonthTxt = response.getJSONObject("data").getJSONObject("date").getJSONObject("hijri").getJSONObject("month").get("ar").toString();
-                        }else {
-                            hijriMonthTxt = response.getJSONObject("data").getJSONObject("date").getJSONObject("hijri").getJSONObject("month").get("en").toString();
-                        }
-                        City = response.getJSONObject("data").getJSONObject("meta").get("timezone").toString();
-                        gregoryDate =  response.getJSONObject("data").getJSONObject("date").getJSONObject("gregorian").get("date").toString();
-
-                        city.setText(City);
-
-                        prayerTimes=new Timing(fajr,shurooq,zuhr,asr,magrib,isa,midnight,hijriDate,gregoryDate,City);
-                        setPrayerTimes();
-
-
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat format1=new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-                        Date dt1=format1.parse(gregoryDate);
-                        dayOfTheWeek = (String) DateFormat.format("EEEE", dt1); // Thursday
-                        Day          = (String) DateFormat.format("dd",   dt1); // 20
-                        monthString  = (String) DateFormat.format("MMM",  dt1); // Jun
-                        monthNumber  = (String) DateFormat.format("MM",   dt1); // 06
-                        year         = (String) DateFormat.format("yyyy", dt1); // 2013
-                        dateDay.setText(Day);
-                        dateMonth.setText(" "+monthString);
-                        day.setText(dayOfTheWeek);
-
-
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat format2=new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-                        Date dt2=format2.parse(hijriDate);
-                        String dayOfTheWeekHijri = (String) DateFormat.format("EEEE", dt2); // Thursday
-                        String DayHijri          = (String) DateFormat.format("dd",   dt2); // 20
-                        String monthStringHijri  = (String) DateFormat.format("MMM",  dt2); // Jun
-                        String monthNumberHijri  = (String) DateFormat.format("MM",   dt2); // 06
-                        String yearHijri         = (String) DateFormat.format("yyyy", dt2); // 2013
-
-                        hijriDay.setText(DayHijri);
-                        hijriMonth.setText(" "+hijriMonthTxt);
-
-                        if (checktimings(getCurrentTime(),fajr))
-                        {
-                            NextSalat = 1;
-                            Log.e("time", getCurrentTime());
-                        } else if (checktimings(getCurrentTime(),shurooq)){
-
-                            NextSalat = 2;
-                            Log.e("time","2");
-
-                        } else if (checktimings(getCurrentTime(),zuhr)){
-
-                            NextSalat = 3;
-                            Log.e("time","3");
-                        } else if (checktimings(getCurrentTime(),asr)){
-
-                            NextSalat = 4;
-                            Log.e("time","4");
-
-                        }else if (checktimings(getCurrentTime(),magrib)){
-                            NextSalat = 5;
-                            Log.e("time","5");
-
-                        }else if (checktimings(getCurrentTime(),isa)){
-
-                            NextSalat = 6;
-                            Log.e("time","6");
-
-                        }else {
-                            NextSalat = 1;
-                            Log.e("time", getCurrentTime());
-                        }
-                        if (NextSalat == 1){
-                            nextSalat.setText(getResources().getString(R.string.fajr_prayer)+fajr);
-                            time2 = fajr;
-                            card1.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                        }else if (NextSalat == 2){
-                            nextSalat.setText(getResources().getString(R.string.shurroq_prayer)+shurooq);
-                            time2 = shurooq;
-                            card2.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                        }else if (NextSalat == 3){
-                            nextSalat.setText(getResources().getString(R.string.zuhr_prayer)+zuhr);
-                            time2 = zuhr;
-                            card3.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                        }else if (NextSalat == 4){
-                            nextSalat.setText(getResources().getString(R.string.asr_prayer)+asr);
-                            time2 = asr;
-                            card4.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                        }else if (NextSalat == 5){
-                            nextSalat.setText(getResources().getString(R.string.magrib_prayer)+magrib);
-                            time2 = magrib;
-                            card5.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                        }else if (NextSalat == 6){
-                            nextSalat.setText(getResources().getString(R.string.isa_prayer)+isa);
-                            time2 = isa;
-                            card6.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                        }
-
-                        if (time2.equals(fajr)){
-                            Log.e("currentdatetime",currentdatetime());
-                            Log.e("timeeee",timediff(currentdatetime(),"04/26/2021 11:00 pm"));
-
-                            final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
-                            final Date dateObj = sdf.parse(fajr);
-                            String newFajr=new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj);
-
-                            String value =monthNumber+"/"+(Integer.parseInt(Day)+1)+"/"+year+" "+newFajr;
-
-                            Log.e("value",value);
-                            remaintimevalue=timediff(currentdatetime(),value);
-                            Log.e("remaining",remaintimevalue);
-
-                        }else {
-                            String value =monthNumber+"/"+Day+"/"+year+" "+time2;
-                            remaintimevalue=timediff(currentdatetime(),value);
-                        }
-
-                        remainTime.setText(remaintimevalue+getResources().getString(R.string.is_remaining));
-                        Log.e("remaining",remaintimevalue);
-
-                    } catch (JSONException | ParseException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    pDialog.hide();
-                }, error -> {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                    Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
-                    // hide the progress dialog
-                    pDialog.hide();
-                    getData();
-                });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
-    }
-
     private void setPrayerTimes() {
-        if (AppController.getPrefranceDataBoolean("12")){
-
+        if (AppController.getPrefranceDataBoolean("12")) {
             try {
                 final SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
-                final Date dateObj = sdf.parse(fajr);
+                final Date dateObj = sdf.parse(data.getTiming().getFajr());
                 Fajr.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObj));
-                final Date dateObjzuhr = sdf.parse(zuhr);
+                final Date dateObjzuhr = sdf.parse(data.getTiming().getDhuhr());
                 Zuhr.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjzuhr));
-                final Date dateObjasr = sdf.parse(asr);
+                final Date dateObjasr = sdf.parse(data.getTiming().getAsr());
                 Asr.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjasr));
-                final Date dateObjmagrib = sdf.parse(magrib);
+                final Date dateObjmagrib = sdf.parse(data.getTiming().getMaghrib());
                 Majreb.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjmagrib));
-                final Date dateObjisa = sdf.parse(isa);
+                final Date dateObjisa = sdf.parse(data.getTiming().getIsha());
                 isha.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjisa));
-                final Date dateObjshurooq = sdf.parse(shurooq);
+                final Date dateObjshurooq = sdf.parse(data.getTiming().getSunrise());
                 shorooq.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateObjshurooq));
             } catch (final ParseException e) {
                 e.printStackTrace();
             }
 
-        }else {
-            Fajr.setText(fajr);
-            Zuhr.setText(zuhr);
-            Asr.setText(asr);
-            Majreb.setText(magrib);
-            isha.setText(isa);
-
-            shorooq.setText(shurooq);
+        } else {
+            Fajr.setText(data.getTiming().getFajr());
+            Zuhr.setText(data.getTiming().getDhuhr());
+            Asr.setText(data.getTiming().getAsr());
+            Majreb.setText(data.getTiming().getMaghrib());
+            isha.setText(data.getTiming().getIsha());
+            shorooq.setText(data.getTiming().getSunrise());
         }
     }
 
@@ -473,10 +415,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String currentdatetime(){
+    private String currentdatetime() {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.ENGLISH);
         String currentDateandTime = sdf.format(new Date());
-        return  currentDateandTime;
+        return currentDateandTime;
     }
 
 
@@ -490,20 +432,20 @@ public class MainActivity extends AppCompatActivity {
             Date date1 = sdf.parse(time);
             Date date2 = sdf.parse(endtime);
 
-            if(date1.before(date2)) {
+            if (date1.before(date2)) {
                 return true;
             } else {
 
                 return false;
             }
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return false;
     }
 
 
-    public  String timediff(String dateStart , String dateStop) throws ParseException {
+    public String timediff(String dateStart, String dateStop) throws ParseException {
 
         //HH converts hour in 24 hours format (0-23), day calculation
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.ENGLISH);
@@ -512,8 +454,8 @@ public class MainActivity extends AppCompatActivity {
         Date d2 = null;
 
 
-        Log.e("time",dateStart);
-        Log.e("timesec",dateStop);
+        Log.e("time", dateStart);
+        Log.e("timesec", dateStop);
         d1 = format.parse(dateStart);
         d2 = format.parse(dateStop);
 
@@ -530,14 +472,14 @@ public class MainActivity extends AppCompatActivity {
         System.out.print(diffHours + " hours, ");
         System.out.print(diffMinutes + " minutes, ");
         System.out.print(diffSeconds + " seconds.");
-        if (diffDays==0 && diffHours!=0){
-            Output=diffHours + " hours, "+diffMinutes + " minutes";
-        }else if (diffHours == 0 && diffDays==0){
-            Output=diffMinutes + " minutes";
-        }else if (diffHours == 0 && diffMinutes ==0){
-            Output=diffDays+ " days";
-        }else {
-            Output=diffDays+ " days, "+diffHours + " hours, "+diffMinutes + " minutes";
+        if (diffDays == 0 && diffHours != 0) {
+            Output = diffHours + " hours, " + diffMinutes + " minutes";
+        } else if (diffHours == 0 && diffDays == 0) {
+            Output = diffMinutes + " minutes";
+        } else if (diffHours == 0 && diffMinutes == 0) {
+            Output = diffDays + " days";
+        } else {
+            Output = diffDays + " days, " + diffHours + " hours, " + diffMinutes + " minutes";
         }
 
         return Output;
@@ -546,14 +488,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.setting){
+        if (id == R.id.setting) {
             Intent setting = new Intent(MainActivity.this, Settings.class);
             startActivity(setting);
         }

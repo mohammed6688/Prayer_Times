@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.mocomp.prayeralert.AppController;
 import com.mocomp.prayeralert.R;
 import com.mocomp.prayeralert.dal.ServerDAO;
 import com.mocomp.prayeralert.interfaces.Dao;
@@ -16,32 +17,13 @@ import com.mocomp.prayeralert.interfaces.Dao;
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
 
+    String url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method=8";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        getMethod();
         new ServerDAO();
-
-//        int result =serverDAO.getData("https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method=8");
-//
-//        Log.e("return",String.valueOf(result));
-//        if (result==200){
-//            redirect();
-//        }else {
-////            close();
-//        }
-
-//        int SPLASH_DISPLAY_LENGTH = 2000;
-//        new Handler().postDelayed(new Runnable(){
-//            @Override
-//            public void run() {
-//                /* Create an Intent that will start the Menu-Activity. */
-//                Intent mainIntent = new Intent(SplashScreen.this, MainActivity.class);
-//                SplashScreen.this.startActivity(mainIntent);
-//                SplashScreen.this.finish();
-//            }
-//        }, SPLASH_DISPLAY_LENGTH);
-
     }
 
     @Override
@@ -58,7 +40,7 @@ public class SplashScreen extends AppCompatActivity {
         }
         @Override
         protected Integer doInBackground(Void... params) {
-           ServerDAO.serverDAO.getData("https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method=8");
+           ServerDAO.serverDAO.getData(url);
             while (ServerDAO.serverDAO.statusCode==0){}
             return ServerDAO.serverDAO.statusCode;
         }
@@ -72,10 +54,16 @@ public class SplashScreen extends AppCompatActivity {
             }else {
                 SplashScreen.this.finish();
             }
-
         }
-
     }
+
+    private void getMethod() {
+        String method = AppController.getPrefranceData("method");
+        if (!method.isEmpty()){
+            url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method="+method;
+        }
+    }
+
     private void redirect() {
         Intent mainIntent = new Intent(SplashScreen.this, MainActivity.class);
         SplashScreen.this.startActivity(mainIntent);
