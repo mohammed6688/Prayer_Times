@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 
+import com.mocomp.prayeralert.activity.MainActivity;
+
 import java.util.Locale;
 
 public class Settings extends AppCompatActivity {

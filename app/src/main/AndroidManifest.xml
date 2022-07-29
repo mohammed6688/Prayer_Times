@@ -16,11 +16,11 @@
         <activity android:name="com.mocomp.prayeralert.Theme"></activity>
         <activity android:name="com.mocomp.prayeralert.Settings"
             android:exported="true"/>
-        <activity android:name="com.mocomp.prayeralert.MainActivity"
+        <activity android:name="com.mocomp.prayeralert.activity.MainActivity"
             android:exported="true">
 
         </activity>
-        <activity android:name="com.mocomp.prayeralert.SplashScreen"
+        <activity android:name="com.mocomp.prayeralert.activity.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

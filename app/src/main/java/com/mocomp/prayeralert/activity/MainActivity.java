@@ -1,4 +1,4 @@
-package com.mocomp.prayeralert;
+package com.mocomp.prayeralert.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,12 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.mocomp.prayeralert.helper.serverDAO;
-import com.mocomp.prayeralert.models.PrayerTimes;
+import com.mocomp.prayeralert.AppController;
+import com.mocomp.prayeralert.R;
+import com.mocomp.prayeralert.Settings;
+import com.mocomp.prayeralert.dal.ServerDAO;
+import com.mocomp.prayeralert.model.Timing;
 
 import org.json.JSONException;
 
@@ -55,11 +56,10 @@ public class MainActivity extends AppCompatActivity {
     String City;
     String hijriMonthTxt;
     String url = "https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method=8";
-    PrayerTimes prayerTimes;
-    //String url = "https://muslimsalat.com/cairo/Qalyubia/toukh/daily/1.json?key=a8e72d680845a42fbb23891020d968ca";
+    Timing prayerTimes;
     ProgressDialog pDialog;
     TextView hijriDay,hijriMonth ,Fajr,Zuhr,Asr,Majreb,isha,nextSalat,remainTime,day,dateDay,dateMonth,city,shorooq;
-    serverDAO serverDao;
+    ServerDAO serverDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        serverDao =new serverDAO();
         if(AppController.getPrefranceData("lang").equals("ar")){
             Locale locale2 = new Locale("ar");
             Locale.setDefault(locale2);
@@ -104,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         initializeListeners();
         getMethod();
         getData();
-
 
     }
 
@@ -307,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
 
                         city.setText(City);
 
-                        prayerTimes=new PrayerTimes(fajr,shurooq,zuhr,asr,magrib,isa,midnight,hijriDate,gregoryDate,City);
+                        prayerTimes=new Timing(fajr,shurooq,zuhr,asr,magrib,isa,midnight,hijriDate,gregoryDate,City);
                         setPrayerTimes();
 
 
@@ -420,17 +418,13 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     pDialog.hide();
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
-                // hide the progress dialog
-                pDialog.hide();
-                getData();
-            }
-        });
+                }, error -> {
+                    VolleyLog.d(TAG, "Error: " + error.getMessage());
+                    Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
+                    // hide the progress dialog
+                    pDialog.hide();
+                    getData();
+                });
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
@@ -560,7 +554,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.setting){
-            Intent setting = new Intent(MainActivity.this,Settings.class);
+            Intent setting = new Intent(MainActivity.this, Settings.class);
             startActivity(setting);
         }
         return super.onOptionsItemSelected(item);

@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.mocomp.prayeralert.activity.MainActivity;
+
 public class Theme extends AppCompatActivity {
 
     private Switch myswitch;
