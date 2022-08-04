@@ -1,4 +1,4 @@
-package com.mocomp.prayeralert;
+package com.mocomp.prayeralert.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import com.mocomp.prayeralert.activity.MainActivity;
+import com.mocomp.prayeralert.R;
 
 public class Theme extends AppCompatActivity {
 

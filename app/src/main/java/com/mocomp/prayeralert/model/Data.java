@@ -7,6 +7,9 @@ public class Data implements Serializable {
     Date date;
     Meta meta;
 
+    public Data() {
+    }
+
     public Data(Timing timing, Date date, Meta meta) {
         this.timing = timing;
         this.date = date;

@@ -8,6 +8,9 @@ public class Date implements Serializable {
     HijriDate hijriDate;
     GregorianDate gregorianDate;
 
+    public Date() {
+    }
+
     public Date(String readable, String timeStamp, HijriDate hijriDate, GregorianDate gregorianDate) {
         this.readable = readable;
         this.timeStamp = timeStamp;

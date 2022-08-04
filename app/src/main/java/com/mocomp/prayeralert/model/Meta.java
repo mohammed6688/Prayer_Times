@@ -7,6 +7,8 @@ public class Meta implements Serializable {
     long lon;
     String timeZone;
 
+    public Meta() {
+    }
 
     public Meta(long lat, long lon, String timeZone) {
         this.lat = lat;

@@ -11,6 +11,9 @@ public class GregorianDate implements Serializable {
     String year;
     Designation designation;
 
+    public GregorianDate() {
+    }
+
     public GregorianDate(String date, String format, String day, WeekDay weekDay, Month month, String year, Designation designation) {
         this.date = date;
         this.format = format;

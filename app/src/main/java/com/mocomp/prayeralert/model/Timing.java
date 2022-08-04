@@ -1,5 +1,7 @@
 package com.mocomp.prayeralert.model;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 
@@ -16,13 +18,13 @@ public class Timing implements Serializable {
     String lastThird;
 
     public Timing(String fajr, String sunrise, String dhuhr, String asr, String maghrib, String isha, String imsak, String midnight, String firstThird, String lastThird) {
-        Fajr = fajr;
-        Sunrise = sunrise;
-        Dhuhr = dhuhr;
-        Asr = asr;
-        Maghrib = maghrib;
-        Isha = isha;
-        Imsak = imsak;
+        this.Fajr = fajr;
+        this.Sunrise = sunrise;
+        this.Dhuhr = dhuhr;
+        this.Asr = asr;
+        this.Maghrib = maghrib;
+        this.Isha = isha;
+        this.Imsak = imsak;
         this.midnight = midnight;
         this.firstThird = firstThird;
         this.lastThird = lastThird;
@@ -32,6 +34,7 @@ public class Timing implements Serializable {
     }
 
     public String getFajr() {
+        Log.e("fajt: ",Fajr);
         return Fajr;
     }
 

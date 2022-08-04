@@ -6,6 +6,9 @@ public class Designation implements Serializable {
     String abbreviated;
     String expanded;
 
+    public Designation() {
+    }
+
     public Designation(String abbreviated, String expanded) {
         this.abbreviated = abbreviated;
         this.expanded = expanded;

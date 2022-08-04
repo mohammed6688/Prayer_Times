@@ -1,4 +1,4 @@
-package com.mocomp.prayeralert;
+package com.mocomp.prayeralert.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -18,7 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 
-import com.mocomp.prayeralert.activity.MainActivity;
+import com.mocomp.prayeralert.AppController;
+import com.mocomp.prayeralert.R;
 
 import java.util.Locale;
 

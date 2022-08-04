@@ -6,6 +6,9 @@ public class WeekDay implements Serializable {
     String en;
     String ar;
 
+    public WeekDay() {
+    }
+
     public WeekDay(String en, String ar) {
         this.en = en;
         this.ar = ar;

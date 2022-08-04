@@ -13,8 +13,8 @@
         android:supportsRtl="false"
         android:exported="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.mocomp.prayeralert.Theme"></activity>
-        <activity android:name="com.mocomp.prayeralert.Settings"
+        <activity android:name="com.mocomp.prayeralert.activity.Theme"></activity>
+        <activity android:name="com.mocomp.prayeralert.activity.Settings"
             android:exported="true"/>
         <activity android:name="com.mocomp.prayeralert.activity.MainActivity"
             android:exported="true">

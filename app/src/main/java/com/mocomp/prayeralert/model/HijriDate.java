@@ -13,6 +13,9 @@ public class HijriDate implements Serializable {
     Designation designation;
     String [] holidays;
 
+    public HijriDate() {
+    }
+
     public HijriDate(String date, String format, String day, WeekDay weekDay, Month month, String year, Designation designation) {
         this.date = date;
         this.format = format;

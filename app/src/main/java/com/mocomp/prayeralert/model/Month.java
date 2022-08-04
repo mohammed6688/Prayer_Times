@@ -7,6 +7,9 @@ public class Month implements Serializable {
     String en;
     String ar;
 
+    public Month() {
+    }
+
     public Month(int number, String en) {
         this.number = number;
         this.en = en;
