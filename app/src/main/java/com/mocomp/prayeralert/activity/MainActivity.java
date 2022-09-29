@@ -122,7 +122,9 @@ public class MainActivity extends AppCompatActivity {
             ishaCard.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             Log.e("nextSalat", "6");
         } else {
+            nextSalat.setText(Helper.stringBuilder(getResources().getString(R.string.fajr_prayer), data.getTiming().getFajr()));
             nextSalaTiming = data.getTiming().getFajr();
+            fajrCard.setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             Log.e("time", Helper.getCurrentTime());
         }
 
@@ -150,18 +152,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setDate() throws ParseException {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         Date dt1 = format1.parse(data.getDate().getGregorianDate().getDate());
-
+        Log.e("Gregorian date: ", String.valueOf(dt1));
         dayOfTheWeek = (String) DateFormat.format("EEEE", dt1); // Thursday
         Day = (String) DateFormat.format("dd", dt1); // 20
         monthString = (String) DateFormat.format("MMM", dt1); // Jun
         monthNumber = (String) DateFormat.format("MM", dt1); // 06
         year = (String) DateFormat.format("yyyy", dt1); // 2013
+        Log.e("dayOfTheWeek: ", dayOfTheWeek);
 
 
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         Date dt2 = format2.parse(data.getDate().getHijriDate().getDate());
         String dayOfTheWeekHijri = (String) DateFormat.format("EEEE", dt2); // Thursday
         String DayHijri = (String) DateFormat.format("dd", dt2); // 20

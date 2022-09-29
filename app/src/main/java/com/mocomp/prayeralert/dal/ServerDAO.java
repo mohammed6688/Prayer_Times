@@ -5,6 +5,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mocomp.prayeralert.AppController;
 import com.mocomp.prayeralert.interfaces.Dao;
 import com.mocomp.prayeralert.model.Data;
@@ -16,6 +17,8 @@ import com.mocomp.prayeralert.model.Meta;
 import com.mocomp.prayeralert.model.Month;
 import com.mocomp.prayeralert.model.Timing;
 import com.mocomp.prayeralert.model.WeekDay;
+
+import java.io.DataInput;
 
 public class ServerDAO implements Dao {
     public int statusCode=0;
@@ -34,6 +37,9 @@ public class ServerDAO implements Dao {
                 response -> {
                     Log.d(TAG, response.toString());
                     try {
+                        ObjectMapper mapper=new ObjectMapper();
+                        Data dataTemp =mapper.readValue(response.toString(),Data.class);
+                        Log.e("output, ",dataTemp.toString());
                         statusCode=response.getInt("code");
                         String fajr = response.getJSONObject("data").getJSONObject("timings").get("Fajr").toString();
                         String shurooq = response.getJSONObject("data").getJSONObject("timings").get("Sunrise").toString();
