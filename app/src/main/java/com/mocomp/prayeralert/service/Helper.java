@@ -63,7 +63,7 @@ public class Helper {
     }
 
     public static String timeDifferance(String startTime, String endTime) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.ENGLISH);       //HH converts hour in 24 hours format (0-23), day calculation
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm", Locale.ENGLISH);       //HH converts hour in 24 hours format (0-23), day calculation
         String Output;
         Log.e("startTime", startTime);
         Log.e("endTime", endTime);

@@ -90,6 +90,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initializeVariables();
+        initializeListeners();
+        setPrayerTimes();
+        try {
+            setDate();
+            nextSalat();
+        } catch (ParseException e) {
+            Log.e("error while parsing", e.toString());
+            e.printStackTrace();
+        }
+    }
+
     private void nextSalat() throws ParseException {
         if (Helper.checkPrecedence(Helper.getCurrentTime(), data.getTiming().getFajr())) {
             nextSalat.setText(Helper.stringBuilder(getResources().getString(R.string.fajr_prayer), data.getTiming().getFajr()));
@@ -213,7 +228,8 @@ public class MainActivity extends AppCompatActivity {
         fajrCard.setOnClickListener(v -> {
             if (data.getTiming().getFajr() != null) {
                 try {
-                    remainingTimeHelper(data.getTiming().getFajr(),data.getTiming().getFajr());
+                    String remainTime=remainingTimeHelper(data.getTiming().getFajr(),data.getTiming().getFajr());
+                    Toast.makeText(MainActivity.this, remainTime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -222,7 +238,8 @@ public class MainActivity extends AppCompatActivity {
         sunriseCard.setOnClickListener(v -> {
             if (data.getTiming().getSunrise() != null && data.getTiming().getFajr()!=null) {
                 try {
-                    remainingTimeHelper(data.getTiming().getSunrise(),data.getTiming().getFajr());
+                    String remainTime=remainingTimeHelper(data.getTiming().getSunrise(),data.getTiming().getFajr());
+                    Toast.makeText(MainActivity.this, remainTime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -231,7 +248,8 @@ public class MainActivity extends AppCompatActivity {
         dhuhrCard.setOnClickListener(v -> {
             if (data.getTiming().getDhuhr() != null && data.getTiming().getFajr()!=null) {
                 try {
-                    remainingTimeHelper(data.getTiming().getDhuhr(),data.getTiming().getFajr());
+                    String remainTime=remainingTimeHelper(data.getTiming().getDhuhr(),data.getTiming().getFajr());
+                    Toast.makeText(MainActivity.this, remainTime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -240,7 +258,8 @@ public class MainActivity extends AppCompatActivity {
         asrCard.setOnClickListener(v -> {
             if (data.getTiming().getAsr() != null && data.getTiming().getFajr()!=null) {
                 try {
-                    remainingTimeHelper(data.getTiming().getAsr(),data.getTiming().getFajr());
+                    String remainTime=remainingTimeHelper(data.getTiming().getAsr(),data.getTiming().getFajr());
+                    Toast.makeText(MainActivity.this, remainTime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -249,7 +268,8 @@ public class MainActivity extends AppCompatActivity {
         maghribCard.setOnClickListener(v -> {
             if (data.getTiming().getMaghrib() != null && data.getTiming().getFajr()!=null) {
                 try {
-                    remainingTimeHelper(data.getTiming().getMaghrib(),data.getTiming().getFajr());
+                    String remainTime=remainingTimeHelper(data.getTiming().getMaghrib(),data.getTiming().getFajr());
+                    Toast.makeText(MainActivity.this, remainTime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -258,7 +278,8 @@ public class MainActivity extends AppCompatActivity {
         ishaCard.setOnClickListener(v -> {
             if (data.getTiming().getIsha() != null && data.getTiming().getFajr()!=null) {
                 try {
-                    remainingTimeHelper(data.getTiming().getIsha(),data.getTiming().getFajr());
+                    String remainTime=remainingTimeHelper(data.getTiming().getIsha(),data.getTiming().getFajr());
+                    Toast.makeText(MainActivity.this, remainTime, Toast.LENGTH_SHORT).show();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -302,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
      * @param comparingTiming: the fajr timing
      * @throws ParseException: parse time
      */
-    public void remainingTimeHelper(String timing, String comparingTiming) throws ParseException {
+    public String remainingTimeHelper(String timing, String comparingTiming) throws ParseException {
         String value;
         SimpleDateFormat sdf = new SimpleDateFormat("H:mm", Locale.ENGLISH);
         Date dateObj = sdf.parse(timing);
@@ -313,8 +334,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             value = monthNumber + "/" + (Integer.parseInt(Day)) + "/" + year + " " + timeFormat;
         }
-        String remainTime = Helper.timeDifferance(Helper.currentDateTime(), value);
-        Toast.makeText(MainActivity.this, remainTime, Toast.LENGTH_SHORT).show();
+        return Helper.timeDifferance(Helper.currentDateTime(), value);
     }
 
     @Override

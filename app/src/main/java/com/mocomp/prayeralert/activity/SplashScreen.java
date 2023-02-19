@@ -17,7 +17,7 @@ import com.mocomp.prayeralert.interfaces.Dao;
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
 
-    String url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method=8";
+    String url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&state=cairo&method=8";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +60,7 @@ public class SplashScreen extends AppCompatActivity {
     private void getMethod() {
         String method = AppController.getPrefranceData("method");
         if (!method.isEmpty()){
-            url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&method="+method;
+            url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&state=cairo&method="+method;
         }
     }
 
