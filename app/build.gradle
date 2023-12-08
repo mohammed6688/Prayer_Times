@@ -5,9 +5,9 @@ android {
 
     defaultConfig {
         applicationId "com.mocomp.prayeralert"
-        minSdkVersion 21
+        minSdkVersion 31
         targetSdkVersion 33
-        versionCode 2
+        versionCode 3
         versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

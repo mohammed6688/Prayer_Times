@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.mocomp.prayeralert.AppConfig;
 import com.mocomp.prayeralert.AppController;
 import com.mocomp.prayeralert.R;
 import com.mocomp.prayeralert.dal.ServerDAO;
@@ -17,12 +18,10 @@ import com.mocomp.prayeralert.interfaces.Dao;
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
 
-    String url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&state=cairo&method=8";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        getMethod();
         new ServerDAO();
     }
 
@@ -33,34 +32,43 @@ public class SplashScreen extends AppCompatActivity {
 
     }
 
-    private class AsyncCaller extends AsyncTask<Void, Void, Integer>{
+    private class AsyncCaller extends AsyncTask<Void, Void, Integer> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
+
         @Override
         protected Integer doInBackground(Void... params) {
-           ServerDAO.serverDAO.getData(url);
-            while (ServerDAO.serverDAO.statusCode==0){}
+            ServerDAO.serverDAO.getData(getTimingMethod());
+            while (ServerDAO.serverDAO.statusCode == 0) {
+                try {
+                    Thread.sleep(100); // Add a short delay to reduce CPU usage
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             return ServerDAO.serverDAO.statusCode;
         }
 
         @Override
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
-            if (result==200){
-                Log.e("out",ServerDAO.serverDAO.data.toString());
+            if (result == 200) {
+//                Log.e("out",ServerDAO.serverDAO.data.toString());
                 redirect();
-            }else {
+            } else {
                 SplashScreen.this.finish();
             }
         }
     }
 
-    private void getMethod() {
+    private String getTimingMethod() {
         String method = AppController.getPrefranceData("method");
-        if (!method.isEmpty()){
-            url="https://api.aladhan.com/v1/timingsByCity?city=egypt&country=cairo&state=cairo&method="+method;
+        if (!method.isEmpty()) {
+            return AppConfig.backEndUrl + method;
+        } else {
+            return AppConfig.defaultBackEndUrl;
         }
     }
 

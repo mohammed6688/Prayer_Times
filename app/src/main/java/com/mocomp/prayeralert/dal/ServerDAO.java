@@ -21,26 +21,26 @@ import com.mocomp.prayeralert.model.WeekDay;
 import java.io.DataInput;
 
 public class ServerDAO implements Dao {
-    public int statusCode=0;
+    public int statusCode = 0;
     private final String TAG = "RESPONSE";
     static String tag_json_obj = "json_obj_req";
     public Data data;
     public static ServerDAO serverDAO;
 
     public ServerDAO() {
-        serverDAO=this;
+        serverDAO = this;
     }
 
-     public int getData(String url) {
+    public int getData(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null,
                 response -> {
                     Log.d(TAG, response.toString());
                     try {
-                        ObjectMapper mapper=new ObjectMapper();
-                        Data dataTemp =mapper.readValue(response.toString(),Data.class);
-                        Log.e("output, ",dataTemp.toString());
-                        statusCode=response.getInt("code");
+                        ObjectMapper mapper = new ObjectMapper();
+                        Data dataTemp = mapper.readValue(response.toString(), Data.class);
+                        Log.e("output, ", dataTemp.toString());
+                        statusCode = response.getInt("code");
                         String fajr = response.getJSONObject("data").getJSONObject("timings").get("Fajr").toString();
                         String shurooq = response.getJSONObject("data").getJSONObject("timings").get("Sunrise").toString();
                         String zuhr = response.getJSONObject("data").getJSONObject("timings").get("Dhuhr").toString();
@@ -52,7 +52,7 @@ public class ServerDAO implements Dao {
                         String firstThird = response.getJSONObject("data").getJSONObject("timings").get("Firstthird").toString();
                         String lastThird = response.getJSONObject("data").getJSONObject("timings").get("Lastthird").toString();
 
-                        Timing timing =new Timing(fajr, shurooq, zuhr, asr, magrib, isa, imsak,midnight,firstThird,lastThird);
+                        Timing timing = new Timing(fajr, shurooq, zuhr, asr, magrib, isa, imsak, midnight, firstThird, lastThird);
 
                         String readable = response.getJSONObject("data").getJSONObject("date").get("readable").toString();
                         String timestamp = response.getJSONObject("data").getJSONObject("date").get("timestamp").toString();
@@ -70,10 +70,10 @@ public class ServerDAO implements Dao {
                         String hijriExpanded = response.getJSONObject("data").getJSONObject("date").getJSONObject("hijri").getJSONObject("designation").get("expanded").toString();
 
 
-                        Designation hijriDesignation=new Designation(hijriAbbreviated,hijriExpanded);
-                        Month hijriMonth=new Month(hijriMonthNum,hijriMonthEn,hijriMonthAr);
-                        WeekDay hijriWeekDay=new WeekDay(hijriWeekdayEn,hijriWeekdayAn);
-                        HijriDate hijriDateObj=new HijriDate(hijriDate,hijriDateFormat,hijriDay,hijriWeekDay,hijriMonth,hijriMonthYear,hijriDesignation);
+                        Designation hijriDesignation = new Designation(hijriAbbreviated, hijriExpanded);
+                        Month hijriMonth = new Month(hijriMonthNum, hijriMonthEn, hijriMonthAr);
+                        WeekDay hijriWeekDay = new WeekDay(hijriWeekdayEn, hijriWeekdayAn);
+                        HijriDate hijriDateObj = new HijriDate(hijriDate, hijriDateFormat, hijriDay, hijriWeekDay, hijriMonth, hijriMonthYear, hijriDesignation);
 
 
                         String gregorianDate = response.getJSONObject("data").getJSONObject("date").getJSONObject("gregorian").get("date").toString();
@@ -86,12 +86,12 @@ public class ServerDAO implements Dao {
                         String gregorianAbbreviated = response.getJSONObject("data").getJSONObject("date").getJSONObject("gregorian").getJSONObject("designation").get("abbreviated").toString();
                         String gregorianExpanded = response.getJSONObject("data").getJSONObject("date").getJSONObject("gregorian").getJSONObject("designation").get("expanded").toString();
 
-                        Designation gregorianDesignation=new Designation(gregorianAbbreviated,gregorianExpanded);
-                        Month gregorianMonth=new Month(gregorianMonthNum,gregorianMonthEn);
-                        WeekDay gregorianWeekDay=new WeekDay(gregorianWeekdayEn);
+                        Designation gregorianDesignation = new Designation(gregorianAbbreviated, gregorianExpanded);
+                        Month gregorianMonth = new Month(gregorianMonthNum, gregorianMonthEn);
+                        WeekDay gregorianWeekDay = new WeekDay(gregorianWeekdayEn);
 
-                        GregorianDate gregorianDateObj=new GregorianDate(gregorianDate,gregorianDateFormat,gregorianDay,gregorianWeekDay,gregorianMonth,gregorianMonthYear,gregorianDesignation);
-                        Date date=new Date(readable,timestamp,hijriDateObj,gregorianDateObj);
+                        GregorianDate gregorianDateObj = new GregorianDate(gregorianDate, gregorianDateFormat, gregorianDay, gregorianWeekDay, gregorianMonth, gregorianMonthYear, gregorianDesignation);
+                        Date date = new Date(readable, timestamp, hijriDateObj, gregorianDateObj);
 
 
                         long latitude = response.getJSONObject("data").getJSONObject("meta").getLong("latitude");
@@ -99,8 +99,8 @@ public class ServerDAO implements Dao {
                         String timezone = response.getJSONObject("data").getJSONObject("meta").get("timezone").toString();
 
 
-                        Meta meta=new Meta(latitude,longitude,timezone);
-                        data=new Data(timing,date,meta);
+                        Meta meta = new Meta(latitude, longitude, timezone);
+                        data = new Data(timing, date, meta);
 
 
                         Log.e("code", String.valueOf(statusCode));
@@ -110,8 +110,8 @@ public class ServerDAO implements Dao {
                     }
 
                 }, error -> {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                });
+            VolleyLog.d(TAG, "Error: " + error.getMessage());
+        });
 
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
         return statusCode;
